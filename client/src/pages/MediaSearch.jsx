@@ -1,6 +1,6 @@
 import React from "react";
 const MediaSearch = () => {
-  return <div>HomePage</div>;
+  return <div>MediaSearch</div>;
 };
 
 export default MediaSearch;

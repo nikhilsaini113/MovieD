@@ -1,6 +1,6 @@
 import React from "react";
 const PasswordUpdate = () => {
-  return <div>HomePage</div>;
+  return <div>PasswordUpdate</div>;
 };
 
 export default PasswordUpdate;

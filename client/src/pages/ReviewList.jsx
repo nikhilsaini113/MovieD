@@ -1,6 +1,6 @@
 import React from "react";
 const ReviewList = () => {
-  return <div>HomePage</div>;
+  return <div>ReviewList</div>;
 };
 
 export default ReviewList;
