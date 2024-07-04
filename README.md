@@ -9,6 +9,11 @@ Movied is a free online database that contains information about movies, TV show
    1. cd server
    2. npm install
    3. npm start
+   
+3. Start the client:
+   1. cd client
+   2. npm install
+   3. npm run dev
 
 ## Environment Variable
 
