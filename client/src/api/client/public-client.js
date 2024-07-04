@@ -1,6 +1,6 @@
 import axios from "axios";
 import queryString from "query-string";
-const baseURL = "http://127.0.0.1:5000/api/v1/";
+const baseURL = "http://localhost:5000/api/v1/";
 const publicClient = axios.create({
   baseURL,
   paramsSerializer: {
@@ -8,7 +8,7 @@ const publicClient = axios.create({
   },
 });
 //manipulate outgoing request configurations before they are sent
-publicClient.interceptors.request(async (config) => {
+publicClient.interceptors.request.use(async (config) => {
   return {
     ...config,
     headers: {

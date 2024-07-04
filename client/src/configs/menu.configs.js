@@ -10,27 +10,27 @@ const main = [
   {
     display: "home",
     path: "/",
-    icon: <HomeOutlinedIcon />,
-    state: "home",
+    icon: <HomeOutlinedIcon/>,
+    state: "home"
   },
   {
     display: "movies",
     path: "/movie",
-    icon: <SlideshowOutlinedIcon />,
-    state: "movie",
+    icon: <SlideshowOutlinedIcon/>,
+    state: "movie"
   },
   {
     display: "tv series",
     path: "/tv",
     icon: <LiveTvOutlinedIcon />,
-    state: "tv",
+    state: "tv"
   },
   {
     display: "search",
     path: "/search",
     icon: <SearchOutlinedIcon />,
-    state: "search",
-  },
+    state: "search"
+  }
 ];
 
 const user = [
@@ -38,20 +38,20 @@ const user = [
     display: "favorites",
     path: "/favorites",
     icon: <FavoriteBorderOutlinedIcon />,
-    state: "favorite",
+    state: "favorite"
   },
   {
     display: "reviews",
     path: "/reviews",
     icon: <RateReviewOutlinedIcon />,
-    state: "reviews",
+    state: "reviews"
   },
   {
     display: "password update",
     path: "/password-update",
     icon: <LockResetOutlinedIcon />,
-    state: "password.update",
-  },
+    state: "password.update"
+  }
 ];
 
 const menuConfigs = { main, user };

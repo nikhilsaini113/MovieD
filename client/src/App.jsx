@@ -1,7 +1,7 @@
 import "./App.css";
 import { ThemeProvider } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-import themeConfigs from "./configs/theme.config";
+import themeConfigs from "./configs/theme.configs";
 import { ToastContainer } from "react-toastify";
 import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

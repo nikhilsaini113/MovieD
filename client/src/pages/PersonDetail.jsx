@@ -1,6 +1,6 @@
 import React from "react";
 const PersonDetail = () => {
-  return <div>HomePage</div>;
+  return <div>PersonDetail</div>;
 };
 
 export default PersonDetail;

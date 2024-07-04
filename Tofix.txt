@@ -1,0 +1,5 @@
+1.Refresh of page resets theme
+2.Typescript
+3.Add google login(forget password)
+4.Ratings
+5.
