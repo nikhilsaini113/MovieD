@@ -24,7 +24,7 @@ const auth= async (req,res,next)=>{
     if(!token){
         return responseHandler.unauthorize(res);
     }
-    const user= await userModel.findOne(token.data);
+    const user= await userModel.findById(token.data);
     
     if(!user){
         return responseHandler.unauthorize(res);

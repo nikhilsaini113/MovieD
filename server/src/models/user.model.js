@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import modelOptions from './models.options.js';
+import modelOptions from './model.options.js';
 import crypto from 'crypto';
 const UserSchema = new mongoose.Schema({
     username: {type: String, required: true, unique: true},

@@ -5,8 +5,6 @@ const userEndpoints = {
   signup: "user/signup",
   getInfo: "user/info",
   passwordUpdate: "user/update-password",
-  //   getFavorites: "user/favorites",
-  //   addFavorites: "user/favorites",
 };
 
 const userApi = {
@@ -16,6 +14,7 @@ const userApi = {
         username,
         password,
       });
+      return {response};
     } catch (err) {
       return { err };
     }
@@ -33,7 +32,7 @@ const userApi = {
       return { err };
     }
   },
-  getInfo: async ({}) => {
+  getInfo: async () => {
     try {
       const response = await privateClient.get(userEndpoints.getInfo);
       return { response };

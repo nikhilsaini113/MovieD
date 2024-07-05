@@ -16,7 +16,7 @@ export const userSlice = createSlice({
       }
       state.user = action.payload;
     },
-    setListFavorites: (store, action) => {
+    setListFavorites: (state, action) => {
       state.listFavorites = action.payload;
     },
     removeFavorites: (state, action) => {

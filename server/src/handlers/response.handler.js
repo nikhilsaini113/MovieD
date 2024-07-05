@@ -8,7 +8,7 @@ const error = (res) =>
     message: "Oops! Something went wrong!",
   });
 
-const badRequest = (res) =>
+const badRequest = (res,message) =>
   responseWithData(res, 400, {
     status: 400,
     message,

@@ -9,12 +9,12 @@ const signup= async (req,res)=>{
         if(checkUserExists){
             return responseHandler.badRequest(res,"User already exists");
         }
-        const user=await userModel;
+        const user=new userModel();
         user.displayName=displayName;
         user.username=username;
         user.setPassword(password);
         await user.save();
-        const token=jsonwebtoken.sign({data:user._id},process.env.JWT_SECRET,{expiresIN:'30d'});
+        const token=jsonwebtoken.sign({data:user.id},process.env.JWT_SECRET,{expiresIn:'30d'});
         return responseHandler.created(res,{
             token,
             ...user._doc,
@@ -30,15 +30,13 @@ const signin= async (req,res)=>{
     try{
         const {username,password}=req.body;
         const user=await userModel.findOne({username}).select("username password  salt id displayName")
-
         if(!user){
             return responseHandler.badRequest(res,"User not found");
         }
         if(!user.validPassword(password)){
             return responseHandler.badRequest(res,"Invalid credentials");
         }
-        const token=jsonwebtoken.sign({data:user._id},process.env.JWT_SECRET,{expiresIN:'30d'});
-
+        const token=jsonwebtoken.sign({data:user.id},process.env.JWT_SECRET,{expiresIn:'30d'});
         user.password=undefined;
         user.salt=undefined;
 

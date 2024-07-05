@@ -30,9 +30,9 @@ const SiginForm=({switchAuthState})=>{
             setIsLoginRequest(false);
             if(response){
                 signinForm.resetForm();
-                dispatch(setUser(response.user));
-                toast.success('Login successfully');
+                dispatch(setUser(response));
                 dispatch(setAuthModalOpen(false));
+                toast.success('Login Successful!');
             }
             if(err) setErrorMessage(err.message);
         }
@@ -54,7 +54,7 @@ const SiginForm=({switchAuthState})=>{
                 />
                 <TextField
                     type="password"
-                    placeholder="password"
+                    placeholder="Password"
                     name="password"
                     fullWidth
                     value={signinForm.values.password}
@@ -79,7 +79,7 @@ const SiginForm=({switchAuthState})=>{
                 sx={{ marginTop: 1 }}
                 onClick={() => switchAuthState()}
             >
-                Sign up
+                Sign Up
             </Button>
             {errorMessage && (
                 <Box sx={{ marginTop: 2 }}>
