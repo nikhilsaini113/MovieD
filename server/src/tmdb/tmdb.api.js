@@ -23,4 +23,4 @@ const tmdbApi={
     personMedias:async({personId})=>
         await axiosClient.get(tmdbEndpoints.personMedias({personId}))
 }
-export default {tmdbApi}
+export default tmdbApi

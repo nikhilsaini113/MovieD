@@ -9,14 +9,16 @@ import MainLayout from "./components/layout/MainLayout";
 import routes from "./routes/routes";
 import PageWrapper from "./components/common/PageWrapper";
 import "react-toastify/dist/ReactToastify.css";
-
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
 function App() {
   const { themeMode } = useSelector((state) => state.themeMode);
   return (
     <ThemeProvider theme={themeConfigs.custom({ mode: themeMode })}>
       <ToastContainer
         position="bottom-left"
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
