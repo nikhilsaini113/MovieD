@@ -7,7 +7,7 @@ const privateClient = axios.create({
     encode: (params) => queryString.stringify(params),
   },
 });
-//manipulate outgoing request configurations before they are sent
+
 privateClient.interceptors.request.use(async (config) => {
   return {
     ...config,
@@ -17,8 +17,7 @@ privateClient.interceptors.request.use(async (config) => {
     },
   };
 });
-// modify responses or handle errors globally for all requests, 1st callback(onFullfilled) if response have status code 2xx,
-// 2nd callback (onRejected) if response with status code outside range 2xx
+
 privateClient.interceptors.response.use(
   (response) => {
     if (response && response.data) return response.data;
@@ -28,4 +27,5 @@ privateClient.interceptors.response.use(
     throw err.response.data;
   }
 );
+
 export default privateClient;
