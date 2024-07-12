@@ -3,7 +3,7 @@ Movied is a free online database that contains information about movies, TV show
 ## Getting Started
 
 1. Clone this repository:
-   git clone https://github.com/notblondenough/MovieD.git
+   git clone https://github.com/nikhilsaini113/MovieD.git
 
 2. Start the server:
    1. cd server
