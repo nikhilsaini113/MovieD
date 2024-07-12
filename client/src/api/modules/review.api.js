@@ -3,7 +3,7 @@ import privateClient from "../client/private-client";
 const reviewEndPoints = {
   list: "reviews",
   add: "reviews",
-  remove: ({ reviewId }) => `reviews/${reviewId}`,
+  remove: ({ reviewId }) => `reviews/${reviewId}`
 };
 
 const reviewApi = {
@@ -23,7 +23,7 @@ const reviewApi = {
   },
   remove: async ({ reviewId }) => {
     try {
-      const response = await privateClient.post(
+      const response = await privateClient.delete(
         reviewEndPoints.remove({ reviewId })
       );
       return { response };

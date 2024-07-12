@@ -63,7 +63,7 @@ const updatePassword= async (req,res)=>{
         }
         user.setPassword(newPassword);
         await user.save();
-        return responseHandler.ok(res);
+        return responseHandler.ok(res,{});
     }
     catch{
         return responseHandler.error(res);

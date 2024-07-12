@@ -9,6 +9,6 @@ const router= express.Router();
 router.use("/user", userRoute);
 router.use("/:mediaType", mediaRoute);
 router.use("/person", personRoute);
-router.use("/review", reviewRoute);
+router.use("/reviews", reviewRoute);
 
 export default router;

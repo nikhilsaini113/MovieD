@@ -22,7 +22,7 @@ export const userSlice = createSlice({
     removeFavorite: (state, action) => {
       const { mediaId } = action.payload;
       state.listFavorites = [...state.listFavorites].filter(
-        (e) => e.mediaId.toString() !== mediaId.toString
+        (e) => e.mediaId.toString() !== mediaId.toString()
       );
     },
     addFavorite: (state, action) => {

@@ -1,4 +1,5 @@
 1.Typescript
 2.Add google login(forget password)
-3.Ratings
-4.
+3.Watchlist
+4.Header
+5.Profile Photo
