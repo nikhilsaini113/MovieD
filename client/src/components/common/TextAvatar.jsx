@@ -4,7 +4,6 @@ const TextAvatar = ({ text }) => {
   const stringToColor = (str) => {
     let hash = 0;
     let i;
-
     for (i = 0; i < str.length; i += 1) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
@@ -24,7 +23,7 @@ const TextAvatar = ({ text }) => {
       sx={{
         backgroundColor: stringToColor(text),
         width: 40,
-        height: 40
+        height: 40,
       }}
       children={`${text.split(" ")[0][0].toUpperCase()}`}
     />
