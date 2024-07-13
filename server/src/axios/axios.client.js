@@ -15,10 +15,10 @@ const get = async (url) => {
       });
       return response.data;
     } catch (e) {
-      console.log(`Attempt ${attempt} failed:`, e.message);
+      console.log(`Attempt ${attempt} failed:`,url, e.message);
       
       if (attempt === maxRetries) {
-        console.log("Max retries reached. Throwing error.");
+        console.log("Max retries reached. Throwing error.",url);
         throw e;
       }
       

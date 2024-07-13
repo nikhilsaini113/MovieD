@@ -25,7 +25,7 @@ const ScrollAppBar = ({ children, window }) => {
   return cloneElement(children, {
     sx: {
       color: trigger ? "text.primary" : themeMode === themeModes.dark ? "primary.contrastText" : "text.primary",
-      backgroundColor: trigger ? "background.paper" : themeMode === themeModes.dark ? "transparent" : "background.paper"
+      backgroundColor: trigger ? "background.paper" : themeMode === themeModes.dark ? "transparent" : "transparent"
     }
   });
 };

@@ -15,10 +15,11 @@ const personDetail=async (req,res)=>{
 const personMedias=async (req,res)=>{  
     try{
         const {personId}=req.params;
-        const medias=await tmdbApi.personMedias({personId});
-        return responseHandler.ok(res,medias);
+        const media=await tmdbApi.personMedias({personId});
+        return responseHandler.ok(res,media);
     }
-    catch{
+    catch(error){
+        console.log(error)
         return responseHandler.error(res);
     }
 }

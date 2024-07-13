@@ -47,7 +47,7 @@ const PersonMediaGrid = ({ personId }) => {
   return (
     <>
       <Grid container spacing={1} sx={{ marginRight: "-8px!important" }}>
-        {medias.map((media, index) => (
+        {filteredMedias.map((media, index) => (
           <Grid item xs={6} sm={4} md={3} key={index}>
             <MediaItem media={media} mediaType={media.media_type} />
           </Grid>
