@@ -12,4 +12,4 @@
 - [ ] 8. Home Page Auto play & swiper - N
 - [ ] 9. Sort on the basis of genre & filter - A
 - [ ] 10. Change image - N
-- [ ] 11. Deploy - A
+- [x] 11. Deploy - A
