@@ -9,7 +9,8 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import userApi from "../../api/modules/user.api";
 import favoriteApi from "../../api/modules/favorite.api";
-import { setListFavorites,setUser } from "../../redux/features/userSlice";
+import watchlistApi from "../../api/modules/watchlist.api";
+import { setWatchlist,setListFavorites,setUser } from "../../redux/features/userSlice";
 import { setThemeMode } from "../../redux/features/themeModeSlice";
 
 
@@ -43,11 +44,22 @@ const MainLayout = () => {
         toast.error(err.message);
       }
     }
+    const getWatchlist = async () => {
+      const { response, err } = await watchlistApi.getList();
+      if (response) {
+        dispatch(setWatchlist(response));
+      }
+      if (err) {
+        toast.error(err.message);
+      }
+    }
     if(user){
       getFavorites();
+      getWatchlist();
     }
     else{
       dispatch(setListFavorites([]));
+      dispatch(setWatchlist([]));
     }
   },[dispatch,user])
   return (

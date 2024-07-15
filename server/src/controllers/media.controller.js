@@ -4,6 +4,7 @@ import userModel from "../models/user.model.js";
 import favoriteModel from "../models/favorite.model.js";
 import reviewModel from "../models/review.model.js";
 import tokenMiddlerware from "../middlewares/token.middleware.js";
+import watchlistModel from "../models/watchlist.model.js";
 
 const getList = async (req, res) => {
   try {
@@ -81,7 +82,12 @@ const getDetail = async (req, res) => {
           user: user.id,
           mediaId,
         });
+        const inWatchlist = await watchlistModel.findOne({
+          user: user.id,
+          mediaId,
+        })
         media.isFavorite = isFavorite !== null;
+        media.inWatchlist = inWatchlist !== null;
       }
     }
 

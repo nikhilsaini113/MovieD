@@ -5,6 +5,7 @@ import userController from "../controllers/user.controller.js";
 import requestHandler from "../handlers/request.handler.js";
 import userModel from "../models/user.model.js";
 import tokenMiddleware from "../middlewares/token.middleware.js";
+import watchlistController from "../controllers/watchlist.controller.js";
 
 const router = express.Router();
 
@@ -94,6 +95,12 @@ router.get(
   favoriteController.getFavoritesofUser
 );
 
+router.get(
+  "/watchlist",
+  tokenMiddleware.auth,
+  watchlistController.getWatchlistofUser
+);
+
 router.post(
   "/favorites",
   tokenMiddleware.auth,
@@ -114,10 +121,36 @@ router.post(
   favoriteController.addFavorite
 );
 
+router.post(
+  "/watchlist",
+  tokenMiddleware.auth,
+  body("mediaType")
+    .exists()
+    .withMessage("mediaType is required")
+    .custom((type) => ["movie", "tv"].includes(type))
+    .withMessage("mediaType invalid"),
+  body("mediaId")
+    .exists()
+    .withMessage("mediaId is required")
+    .isLength({ min: 1 })
+    .withMessage("mediaId can not be empty"),
+  body("mediaTitle").exists().withMessage("mediaTitle is required"),
+  body("mediaPoster").exists().withMessage("mediaPoster is required"),
+  body("mediaRate").exists().withMessage("mediaRate is required"),
+  requestHandler.validate,
+  watchlistController.addtoWatchlist
+);
+
 router.delete(
   "/favorites/:favoriteId",
   tokenMiddleware.auth,
   favoriteController.removeFavorite
+);
+
+router.delete(
+  "/watchlist/:watchlistId",
+  tokenMiddleware.auth,
+  watchlistController.removefromWatchlist
 );
 
 export default router;

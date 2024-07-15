@@ -2,6 +2,8 @@ import React from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
@@ -18,10 +20,11 @@ import uiConfigs from "../configs/ui.configs";
 import tmdbConfigs from "../api/configs/tmdb.configs";
 import mediaApi from "../api/modules/media.api";
 import favoriteApi from "../api/modules/favorite.api";
+import watchlistApi from "../api/modules/watchlist.api";
 
 import { setGlobalLoading } from "../redux/features/globalLoadingSlice";
 import { setAuthModalOpen } from "../redux/features/authModalSlice";
-import { addFavorite, removeFavorite } from "../redux/features/userSlice";
+import { addFavorite, removeFavorite ,addtoWatchlist,removefromWatchlist} from "../redux/features/userSlice";
 import CastSlide from "../components/common/CastSlide";
 import MediaVideosSlide from "../components/common/MediaVideosSlice";
 import PosterSlide from "../components/common/PosterSlide";
@@ -29,14 +32,17 @@ import BackdropSlide from "../components/common/BackdropSlide";
 import MediaSlide from "../components/common/MediaSlide";
 import RecommendSlide from "../components/common/RecommendSlide";
 import MediaReview from "../components/common/MediaReview";
+
 const MediaDetail = () => {
   const { mediaType, mediaId } = useParams();
 
-  const { user, listFavorites } = useSelector((state) => state.user);
+  const { user, listFavorites ,watchlist} = useSelector((state) => state.user);
 
   const [media, setMedia] = useState();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [onRequest, setOnRequest] = useState(false);
+  const [inWatchlist, setInWatchlist] = useState(false);
+  const [onRequestFavorite, setOnRequestFavorite] = useState(false);
+  const [onRequestWatchlist, setOnRequestWatchlist] = useState(false);
   const [genres, setGenres] = useState([]);
 
   const dispatch = useDispatch();
@@ -56,6 +62,7 @@ const MediaDetail = () => {
       if (response) {
         setMedia(response);
         setIsFavorite(response.isFavorite);
+        setInWatchlist(response.inWatchlist);
         setGenres(response.genres.splice(0, 2));
       }
 
@@ -67,13 +74,13 @@ const MediaDetail = () => {
   const onFavoriteClick = async () => {
     if (!user) return dispatch(setAuthModalOpen(true));
 
-    if (onRequest) return;
+    if (onRequestFavorite) return;
     if (isFavorite) {
       onRemoveFavorite();
       return;
     }
 
-    setOnRequest(true);
+    setOnRequestFavorite(true);
 
     const body = {
       mediaId: media.id,
@@ -85,7 +92,7 @@ const MediaDetail = () => {
 
     const { response, err } = await favoriteApi.add(body);
 
-    setOnRequest(false);
+    setOnRequestFavorite(false);
 
     if (err) toast.error(err.message);
     if (response) {
@@ -95,9 +102,39 @@ const MediaDetail = () => {
     }
   };
 
+  const onWatchlistClick = async () => {
+    if (!user) return dispatch(setAuthModalOpen(true));
+
+    if (onRequestWatchlist) return;
+    if (inWatchlist) {
+      onRemovefromWatchlist();
+      return;
+    }
+
+    setOnRequestWatchlist(true);
+
+    const body = {
+      mediaId: media.id,
+      mediaTitle: media.title || media.name,
+      mediaType: mediaType,
+      mediaPoster: media.poster_path,
+      mediaRate: media.vote_average,
+    };
+
+    const { response, err } = await watchlistApi.add(body);
+
+    setOnRequestWatchlist(false);
+
+    if (err) toast.error(err.message);
+    if (response) {
+      dispatch(addtoWatchlist(response));
+      setInWatchlist(true);
+      toast.success("Added to watchlist");
+    }
+  };
   const onRemoveFavorite = async () => {
-    if (onRequest) return;
-    setOnRequest(true);
+    if (onRequestFavorite) return;
+    setOnRequestFavorite(true);
 
     const favorite = listFavorites.find(
       (e) => e.mediaId.toString() === media.id.toString()
@@ -106,13 +143,33 @@ const MediaDetail = () => {
       favoriteId: favorite.id,
     });
 
-    setOnRequest(false);
+    setOnRequestFavorite(false);
 
     if (err) toast.error(err.message);
     if (response) {
       dispatch(removeFavorite(favorite));
       setIsFavorite(false);
       toast.success("Remove favorite success");
+    }
+  };
+
+  const onRemovefromWatchlist = async () => {
+    if (onRequestWatchlist) return;
+    setOnRequestWatchlist(true);
+    const watch = watchlist.find(
+      (e) => e.mediaId.toString() === media.id.toString()
+    );
+    const { response, err } = await watchlistApi.remove({
+      watchlistId: watch.id,
+    });
+
+    setOnRequestWatchlist(false);
+
+    if (err) toast.error(err.message);
+    if (response) {
+      dispatch(removefromWatchlist(watch));
+      setInWatchlist(false);
+      toast.success("Removed from watchlist");
     }
   };
   return media ? (
@@ -222,8 +279,26 @@ const MediaDetail = () => {
                     )
                   }
                   loadingPosition="start"
-                  loading={onRequest}
+                  loading={onRequestFavorite}
                   onClick={onFavoriteClick}
+                />
+                <LoadingButton
+                  variant="text"
+                  sx={{
+                    width: "max-content",
+                    "& .MuiButon-starIcon": { marginRight: "0" },
+                  }}
+                  size="large"
+                  startIcon={
+                    inWatchlist ? (
+                      <CheckBoxIcon />
+                    ) : (
+                      <AddBoxOutlinedIcon />
+                    )
+                  }
+                  loadingPosition="start"
+                  loading={onRequestWatchlist}
+                  onClick={onWatchlistClick}
                 />
                 <Button
                   variant="contained"
