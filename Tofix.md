@@ -13,3 +13,4 @@
 - [ ] 9. Sort on the basis of genre & filter - A
 - [x] 10. Change image - N
 - [x] 11. Deploy - A
+- [ ] 12.Signin loading
