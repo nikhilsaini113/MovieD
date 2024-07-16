@@ -132,7 +132,7 @@ const ReviewList = () => {
 
   return (
     <Box sx={{ ...uiConfigs.style.mainContent }}>
-      <Container header={`Your reviews (${count})`}>
+      <Container header={`My reviews (${count})`}>
         <Stack spacing={2}>
           {filteredReviews.map((item) => (
             <Box key={item.id}>

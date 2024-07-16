@@ -8,6 +8,7 @@ import PasswordUpdate from "../pages/PasswordUpdate";
 import ReviewList from "../pages/ReviewList";
 import ProtectedPage from "../components/common/ProtectedPage";
 import Watchlist from "../pages/Watchlist";
+import MyProfile from "../pages/MyProfile";
 
 export const routesGen = {
   home: "/",
@@ -19,6 +20,7 @@ export const routesGen = {
   watchlist: "/watchlist",
   reviewList: "/reviews",
   passwordUpdate: "password-update",
+  myProfile: "/profile",
 };
 
 const routes = [
@@ -72,6 +74,15 @@ const routes = [
       </ProtectedPage>
     ),
     state: "reviews",
+  },
+  {
+    path: "/myprofile",
+    element: (
+      <ProtectedPage>
+        <MyProfile />
+      </ProtectedPage>
+    ),
+    state: "myprofile",
   },
   {
     path: "/:mediaType",

@@ -6,6 +6,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 
 const main = [
   {
@@ -35,6 +36,12 @@ const main = [
 ];
 
 const user = [
+  {
+    display: "my profile",
+    path: "/myprofile",
+    icon: < AccountBoxOutlinedIcon/>,
+    state: "myprofile"
+  },
   {
     display: "favorites",
     path: "/favorites",

@@ -84,7 +84,7 @@ const Watchlist = () => {
 
   return (
     <Box sx={{ ...uiConfigs.style.mainContent }}>
-      <Container header={`Your Watchlist (${count})`}>
+      <Container header={`My Watchlist (${count})`}>
         <Grid container spacing={1} sx={{ marginRight: "-8px!important" }}>
           {filteredMedias.map((media, index) => (
             <Grid item xs={6} sm={4} md={3} key={index}>
