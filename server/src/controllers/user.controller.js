@@ -4,14 +4,14 @@ import jsonwebtoken from "jsonwebtoken";
 
 const signup= async (req,res)=>{
     try{
-        const {username,displayName,password}=req.body;
-        const checkUserExists=await userModel.findOne({username});
+        const {email,displayName,password}=req.body;
+        const checkUserExists=await userModel.findOne({email});
         if(checkUserExists){
             return responseHandler.badRequest(res,"User already exists");
         }
         const user=new userModel();
         user.displayName=displayName;
-        user.username=username;
+        user.email=email;
         user.setPassword(password);
         await user.save();
         const token=jsonwebtoken.sign({data:user.id},process.env.JWT_SECRET,{expiresIn:'30d'});
@@ -28,8 +28,8 @@ const signup= async (req,res)=>{
 
 const signin= async (req,res)=>{
     try{
-        const {username,password}=req.body;
-        const user=await userModel.findOne({username}).select("username password  salt id displayName")
+        const {email,password}=req.body;
+        const user=await userModel.findOne({email}).select("email password  salt id displayName")
         if(!user){
             return responseHandler.badRequest(res,"User not found");
         }

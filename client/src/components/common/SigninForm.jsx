@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import userApi from "../../api/modules/user.api";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import { setUser } from "../../redux/features/userSlice";
-
+import GoogleLogo from "../../../public/google-logo.png"; 
 
 const SiginForm=({switchAuthState})=>{
     const dispatch=useDispatch();
@@ -16,11 +16,11 @@ const SiginForm=({switchAuthState})=>{
     const [errorMessage, setErrorMessage] = useState('');
     const signinForm=useFormik({
         initialValues:{
-            username: '',
+            email: '',
             password: ''
         },
         validationSchema:Yup.object({
-            username:Yup.string().required('Please enter your username').min(8, 'Username minimum 8 characters'),
+            email:Yup.string().required('Please enter your email').email('Please enter a valid email address'),
             password:Yup.string().required('Please enter your password').min(8, 'Password minimum 8 characters')
         }),
         onSubmit: async (values) => {
@@ -37,20 +37,22 @@ const SiginForm=({switchAuthState})=>{
             if(err) setErrorMessage(err.message);
         }
     })
+    const handleGoogleAuth = async () => {
+    }
     return (
         <>
         <Box component="form" onSubmit={signinForm.handleSubmit}>
             <Stack spacing={3}>
                 <TextField
                     type="text"
-                    placeholder="Username"
-                    name="username"
+                    placeholder="Email address"
+                    name="email"
                     fullWidth
-                    value={signinForm.values.username}
+                    value={signinForm.values.email}
                     onChange={signinForm.handleChange}
                     color="success"
-                    error={signinForm.touched.username && signinForm.errors.username !== undefined}
-                    helperText={signinForm.touched.username && signinForm.errors.username}
+                    error={signinForm.touched.email && signinForm.errors.email !== undefined}
+                    helperText={signinForm.touched.email && signinForm.errors.email}
                 />
                 <TextField
                     type="password"
@@ -80,6 +82,16 @@ const SiginForm=({switchAuthState})=>{
                 onClick={() => switchAuthState()}
             >
                 Sign Up
+            </Button>
+            <Button
+            fullWidth
+            sx={{ marginTop: 1 }}
+            variant="outlined"
+            onClick={handleGoogleAuth}
+            style={{ display: "flex", alignItems: "center" }}
+            >
+                <img src={GoogleLogo} alt="Google Logo" style={{ marginRight: 10, width: 20 }} />
+                    Continue with Google
             </Button>
             {errorMessage && (
                 <Box sx={{ marginTop: 2 }}>

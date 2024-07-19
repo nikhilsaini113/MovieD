@@ -14,13 +14,13 @@ const SignupForm = ({switchAuthState}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const signupForm=useFormik({
         initialValues:{
-            username: '',
+            email: '',
             displayName: '',
             password: '',
             confirmPassword:''
         },
         validationSchema:Yup.object({
-            username:Yup.string().required('Please enter your username').min(8, 'Username minimum 8 characters'),
+            email:Yup.string().required('Please enter your email').email('Please enter a valid email address'),
             displayName:Yup.string().required('Please enter your display name').min(8, 'Display name minimum 8 characters'),
             password:Yup.string().required('Please enter your password').min(8, 'Password minimum 8 characters'),
             confirmPassword:Yup.string().required('Please reenter your password').min(8, 'Confirm password minimum 8 characters')
@@ -45,14 +45,14 @@ const SignupForm = ({switchAuthState}) => {
             <Stack spacing={3}>
                 <TextField
                     type="text"
-                    placeholder="Username"
-                    name="username"
+                    placeholder="Enter Email Address"
+                    name="email"
                     fullWidth
-                    value={signupForm.values.username}
+                    value={signupForm.values.email}
                     onChange={signupForm.handleChange}
                     color="success"
-                    error={signupForm.touched.username && signupForm.errors.username !== undefined}
-                    helperText={signupForm.touched.username && signupForm.errors.username}
+                    error={signupForm.touched.email && signupForm.errors.email !== undefined}
+                    helperText={signupForm.touched.email && signupForm.errors.email}
                 />
                 <TextField
                   type="text"
