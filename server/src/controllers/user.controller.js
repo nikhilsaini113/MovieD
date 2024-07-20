@@ -12,6 +12,7 @@ const signup= async (req,res)=>{
         const user=new userModel();
         user.displayName=displayName;
         user.email=email;
+        user.authType="local";
         user.setPassword(password);
         await user.save();
         const token=jsonwebtoken.sign({data:user.id},process.env.JWT_SECRET,{expiresIn:'30d'});
