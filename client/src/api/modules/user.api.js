@@ -4,6 +4,7 @@ const userEndpoints = {
   signin: "user/signin",
   signup: "user/signup",
   getInfo: "user/info",
+  forgotPassword: "user/forgot-password",
   passwordUpdate: "user/update-password",
 };
 
@@ -52,6 +53,14 @@ const userApi = {
       return { err };
     }
   },
+  forgotPassword : async ({email}) => {
+    try {
+        const response = await publicClient.post(userEndpoints.forgotPassword, { email });
+        return { response };
+    } catch (err) {
+        return { err };
+    }
+  }
 };
 
 export default userApi;

@@ -12,6 +12,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
+import ResetPassword from "./pages/ResetPassword";
+
 function App() {
   const { themeMode } = useSelector((state) => state.themeMode);
   return (
@@ -30,7 +32,11 @@ function App() {
       {/* App Routes*/}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainLayout />}>
+          {/* ResetPassword route outside of MainLayout */}
+          <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+          
+          {/* MainLayout and other routes */}
+          <Route element={<MainLayout />}>
             {routes.map((route, index) =>
               route.index ? (
                 <Route

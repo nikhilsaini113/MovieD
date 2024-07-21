@@ -87,6 +87,22 @@ router.put(
   userController.updatePassword
 );
 
+router.post(
+  "/forgot-password",
+  body("email")
+    .exists()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Please enter a valid email address"),
+  requestHandler.validate,
+  userController.forgotPassword
+);
+
+router.post(
+  "/reset-password/:id/:token",
+  userController.resetPassword
+)
+
 router.get("/info", tokenMiddleware.auth, userController.getInfo);
 
 router.get(

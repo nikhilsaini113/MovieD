@@ -5,17 +5,17 @@ import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import Logo from "./Logo";
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
+import ForgotPasswordForm from "./ForgotPasswordForm";
 
 const actionState = {
   signin: "signin",
-  signup: "signup"
+  signup: "signup",
+  forgotPassword: "forgotPassword"
 };
 
 const AuthModal = () => {
   const { authModalOpen } = useSelector((state) => state.authModal);
-
   const dispatch = useDispatch();
-
   const [action, setAction] = useState(actionState.signin);
 
   useEffect(() => {
@@ -43,9 +43,24 @@ const AuthModal = () => {
             <Logo />
           </Box>
 
-          {action === actionState.signin && <SigninForm switchAuthState={() => switchAuthState(actionState.signup)} />}
+          {action === actionState.signin && (
+            <SigninForm 
+              switchAuthState={() => switchAuthState(actionState.signup)}
+              switchToForgotPassword={() => switchAuthState(actionState.forgotPassword)}
+            />
+          )}
 
-          {action === actionState.signup && <SignupForm switchAuthState={() => switchAuthState(actionState.signin)} />}
+          {action === actionState.signup && (
+            <SignupForm 
+              switchAuthState={() => switchAuthState(actionState.signin)}
+            />
+          )}
+
+          {action === actionState.forgotPassword && (
+            <ForgotPasswordForm 
+              switchToSignIn={() => switchAuthState(actionState.signin)}
+            />
+          )}
         </Box>
       </Box>
     </Modal>
