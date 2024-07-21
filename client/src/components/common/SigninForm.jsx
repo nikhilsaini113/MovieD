@@ -8,9 +8,8 @@ import * as Yup from "yup";
 import userApi from "../../api/modules/user.api";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import { setUser } from "../../redux/features/userSlice";
-import GoogleLogo from "../../../public/google-logo.png"; 
 
-const SiginForm=({switchAuthState})=>{
+const SiginForm=({switchAuthState,switchToForgotPassword})=>{
     const dispatch=useDispatch();
     const [isLoginRequest, setIsLoginRequest] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -81,6 +80,13 @@ const SiginForm=({switchAuthState})=>{
             <Button
                 fullWidth
                 sx={{ marginTop: 1 }}
+                onClick={switchToForgotPassword}
+            >
+                Forgot Password?
+            </Button>
+            <Button
+                fullWidth
+                sx={{ marginTop: 1 }}
                 onClick={() => switchAuthState()}
             >
                 Sign Up
@@ -92,7 +98,7 @@ const SiginForm=({switchAuthState})=>{
             onClick={handleGoogleAuth}
             style={{ display: "flex", alignItems: "center" }}
             >
-                <img src={GoogleLogo} alt="Google Logo" style={{ marginRight: 10, width: 20 }} />
+                <img src={'./google-logo.png'} alt="Google Logo" style={{ marginRight: 10, width: 20 }} />
                     Continue with Google
             </Button>
             {errorMessage && (

@@ -24,9 +24,6 @@ const HomePage = () => {
       console.log("error", error);
     }
   };
-  // const logout = () => {
-  //   window.open("http://localhost:6005/logout", "_self");
-  // };
 
   useEffect(() => {
     getUser();

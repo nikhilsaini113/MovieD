@@ -39,6 +39,10 @@ const SignupForm = ({switchAuthState}) => {
             if(err) setErrorMessage(err.message);
         }
     })
+    const handleGoogleAuth = async () => {
+        window.open("http://localhost:5000/auth/google/callback", "_self");
+        console.log("check");
+      }
     return (
         <>
         <Box component="form" onSubmit={signupForm.handleSubmit}>
@@ -104,6 +108,16 @@ const SignupForm = ({switchAuthState}) => {
                 onClick={() => switchAuthState()}
             >
                 Sign In
+            </Button>
+            <Button
+            fullWidth
+            sx={{ marginTop: 1 }}
+            variant="outlined"
+            onClick={handleGoogleAuth}
+            style={{ display: "flex", alignItems: "center" }}
+            >
+                <img src={'./google-logo.png'} alt="Google Logo" style={{ marginRight: 10, width: 20 }} />
+                    Continue with Google
             </Button>
             {errorMessage && (
                 <Box sx={{ marginTop: 2 }}>
