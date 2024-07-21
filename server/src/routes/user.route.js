@@ -103,6 +103,16 @@ router.post(
   userController.resetPassword
 )
 
+router.put(
+  "/setAvatar",
+  tokenMiddleware.auth,
+  body("link").exists(),
+  requestHandler.validate,
+  userController.updatePassword
+);
+
+router.get("/getAvatar", tokenMiddleware.auth, userController.getInfo);
+
 router.get("/info", tokenMiddleware.auth, userController.getInfo);
 
 router.get(

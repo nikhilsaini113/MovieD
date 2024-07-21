@@ -6,6 +6,8 @@ const userEndpoints = {
   getInfo: "user/info",
   forgotPassword: "user/forgot-password",
   passwordUpdate: "user/update-password",
+  getAvatar: "user/getAvatar",
+  setAvatar: "user/setAvatar",
 };
 
 const userApi = {
@@ -15,8 +17,9 @@ const userApi = {
         email,
         password,
       });
-      return {response};
+      return { response };
     } catch (err) {
+      console.log(err);
       return { err };
     }
   },
@@ -30,6 +33,7 @@ const userApi = {
       });
       return { response };
     } catch (err) {
+      console.log(err);
       return { err };
     }
   },
@@ -48,7 +52,25 @@ const userApi = {
         newPassword,
         confirmNewPassword,
       });
-      return {response};
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  setAvatar: async ({ link }) => {
+    try {
+      const response = await privateClient.put(userEndpoints.setAvatar, {
+        link,
+      });
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  getAvatar: async () => {
+    try {
+      const response = await privateClient.get(userEndpoints.getAvatar);
+      return { response };
     } catch (err) {
       return { err };
     }
