@@ -87,7 +87,15 @@ router.put(
   userController.updatePassword
 );
 
+router.put(
+  "/setAvatar",
+  tokenMiddleware.auth,
+  body("link").exists(),
+  requestHandler.validate,
+  userController.updatePassword
+);
 router.get("/info", tokenMiddleware.auth, userController.getInfo);
+router.get("/getAvatar", tokenMiddleware.auth, userController.getInfo);
 
 router.get(
   "/favorites",
