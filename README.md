@@ -41,6 +41,12 @@ Setup the .env file in `./server` and populate with:
 - `JWT_SECRET`: Secret key for session management.
 - `TMDB_BASE_URL`: https://api.themoviedb.org/3/
 - `TMDB_API_KEY`: Your TMDB Api Key
+- `GOOGLE_CLIENT_ID`: Your Google Client ID
+- `GOOGLE_CLIENT_SECRET`: Your Google Client Secret
+- `SESSION_SECRET`: Secret for session management
+- `CLIENT_URL`: URL of the client application
+- `EMAIL_ADDRESS`: Email address for sending emails
+- `EMAIL_PASSWORD`: Password for the email account
 
 ## Environment Variable for client
 
