@@ -10,10 +10,15 @@ import passport from "passport";
 import { Strategy as OAuth2Strategy } from "passport-google-oauth2";
 import userModel from "./src/models/user.model.js";
 import crypto from "crypto";
-
+import jsonwebtoken from "jsonwebtoken";
 const app = express();
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  }
+));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:5173");
@@ -48,7 +53,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log("Profile", profile);
         let user = await userModel.findOne({ email: profile.emails[0].value });
 
         if (!user) {
@@ -88,19 +92,36 @@ app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     successRedirect: "http://localhost:5173",
-    failureRedirect: "http://localhost:5173/movie",
+    failureRedirect: "http://localhost:5173",
   })
 );
 app.get("/login/sucess", async (req, res) => {
-  console.log("reqqq", req.user);
-  if (req.user) {
-    //console.log("ht2");
-    res.status(200).json({ message: "user Login", user: req.user });
+  if (req.user && req.isAuthenticated()) {
+    const token = jsonwebtoken.sign({ data: req.user.id }, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
+    req.user.token = token;
+    res.status(200).json({ message: "User Login", user: req.user });
   } else {
-    //console.log("ht");
-    res.status(400).json({ message: "Not Authorized" });
+    res.status(401).json({ message: "Not Authorized" });
   }
 });
+
+app.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: "Error logging out", error: err });
+    }
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Error destroying session", error: err });
+      }
+      res.clearCookie('connect.sid'); // clear the session cookie
+      return res.status(200).json({ message: "Logged out successfully" });
+    });
+  });
+});
+
 const server = http.createServer(app);
 mongoose
   .connect(process.env.MONGODB_URL)

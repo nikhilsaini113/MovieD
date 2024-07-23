@@ -42,7 +42,6 @@ const PasswordUpdate = () => {
   const onUpdate = async (values) => {
     if (onRequest) return;
     setOnRequest(true);
-    console.log(values);
     const { response, err } = await userApi.passwordUpdate(values);
 
     setOnRequest(false);

@@ -41,7 +41,6 @@ const SignupForm = ({switchAuthState}) => {
     })
     const handleGoogleAuth = async () => {
         window.open("http://localhost:5000/auth/google/callback", "_self");
-        console.log("check");
       }
     return (
         <>

@@ -48,7 +48,6 @@ const MyProfile = () => {
       );
 
       const cloudData = await res.json();
-      //console.log(cloudData);
       setUrl(cloudData.url);
       console.log(cloudData.url);
       const { response, err } = await userApi.setAvatar({
@@ -65,7 +64,6 @@ const MyProfile = () => {
       toast.success("Image Upload Successfully");
     } catch (error) {}
   };
-  //console.log(url);
   useEffect(() => {
     if (flag != 0) saveImage();
   }, [flag]);
@@ -101,8 +99,6 @@ const MyProfile = () => {
       }
     };
     const getStuff = async () => {
-      //const check = userApi.getAvatar();
-      //console.log(check);
       await getFavorites();
       await getWatchlist();
       await getReviews();

@@ -11,21 +11,25 @@ import userApi from "../../api/modules/user.api";
 import favoriteApi from "../../api/modules/favorite.api";
 import watchlistApi from "../../api/modules/watchlist.api";
 import { setWatchlist,setListFavorites,setUser } from "../../redux/features/userSlice";
-import { setThemeMode } from "../../redux/features/themeModeSlice";
-
+import axios from "axios";
 
 const MainLayout = () => {
   const dispatch=useDispatch();
   const {user} = useSelector((state)=>state.user);
   const { themeMode } = useSelector((state) => state.themeMode);
-  
+
   useEffect(() => {
     const authUser = async () => {
       const { response, err } = await userApi.getInfo();
       if (response) {
         dispatch(setUser(response));
+        return;
       }
-      if (err) dispatch(setUser(null));
+      const res = await axios.get("http://localhost:5000/login/sucess", {
+        withCredentials: true,
+      });
+      if(res.data.user.id) 
+        dispatch(setUser(res.data.user));
     }
     authUser();
   },[dispatch])

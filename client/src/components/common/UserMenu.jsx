@@ -2,19 +2,30 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { ListItemButton, ListItemIcon, ListItemText, Menu, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import menuConfigs from "../../configs/menu.configs";
 import { setUser } from "../../redux/features/userSlice";
+import axios from "axios";
 
 const UserMenu = () => {
   const { user } = useSelector((state) => state.user);
-
+  const navigate=useNavigate();
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
   const toggleMenu = (e) => setAnchorEl(e.currentTarget);
 
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/logout', { withCredentials: true });
+      dispatch(setUser(null));
+      navigate('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+  
   return (
     <>
       {user && (
@@ -47,7 +58,7 @@ const UserMenu = () => {
             ))}
             <ListItemButton
               sx={{ borderRadius: "10px" }}
-              onClick={() => dispatch(setUser(null))}
+              onClick={handleLogout}
             >
               <ListItemIcon><LogoutOutlinedIcon /></ListItemIcon>
               <ListItemText disableTypography primary={
