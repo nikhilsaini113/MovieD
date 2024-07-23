@@ -4,9 +4,9 @@
 ## Tasks
 
 - [ ] 1. Typescript
-- [ ] 2. Add Google login (forget password) - N & A
+- [x] 2. Add Google login (forget password) - N & A
 - [x] 3. Watchlist - A
-- [ ] 4. Profile Photo - N & A (/myprofile)
+- [x] 4. Profile Photo - N & A (/myprofile)
 - [x] 5. UI -> color - N
 - [ ] 7. Integrate AI Chat bot - A
 - [x] 8. Home Page Auto play & swiper - N
