@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Divider, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, Stack, TextField, Typography, Avatar } from "@mui/material";
 import { useEffect, useState } from "react";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -10,6 +10,24 @@ import Container from "./Container";
 import reviewApi from "../../api/modules/review.api";
 import TextAvatar from "./TextAvatar";
 
+
+
+const UserAvatar=({user})=>{
+  return (
+    user.avatar? (
+      <Avatar
+      sx={{
+        width: 40,
+        height: 40,
+      }}
+      alt= {user.displayName.toUpperCase()}
+      src= {user.avatar}
+      />
+    ) : (
+      <TextAvatar text={user.displayName} />
+    )
+  )
+}
 const ReviewItem = ({ review, onRemoved }) => {
   const { user } = useSelector((state) => state.user);
 
@@ -35,7 +53,7 @@ const ReviewItem = ({ review, onRemoved }) => {
     }}>
       <Stack direction="row" spacing={2}>
         {/* avatar */}
-        <TextAvatar text={review.user?.displayName} />
+        <UserAvatar user={review.user} />
         {/* avatar */}
         <Stack spacing={2} flexGrow={1}>
           <Stack spacing={1}>
@@ -154,7 +172,7 @@ const MediaReview = ({ reviews, media, mediaType }) => {
           <>
             <Divider />
             <Stack direction="row" spacing={2}>
-              <TextAvatar text={user.displayName} />
+              <UserAvatar user={user} />
               <Stack spacing={2} flexGrow={1}>
                 <Typography variant="h6" fontWeight="700">
                   {user.displayName}

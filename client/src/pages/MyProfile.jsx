@@ -15,6 +15,8 @@ import tmdbConfigs from "../api/configs/tmdb.configs";
 import { stringToColor } from "../components/common/TextAvatar";
 import themeConfigs from "../configs/theme.configs";
 import userApi from "../api/modules/user.api";
+import { setUser } from "../redux/features/userSlice";
+
 const MyProfile = () => {
   const [favMedias, setFavMedias] = useState([]);
   const [watchMedias, setWatchMedias] = useState([]);
@@ -25,15 +27,14 @@ const MyProfile = () => {
   const skip = 4;
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const [image, setImage] = useState("");
-  const [url, setUrl] = useState("");
-  const [flag, setFlag] = useState(0);
-  const saveImage = async () => {
+  const [imageUrl, setImageUrl] = useState("");
+
+  const saveImage = async ({image}) => {
+    dispatch(setGlobalLoading(true));
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "myCloud");
     data.append("cloud_name", "ddn9weama");
-    console.log(data);
     try {
       if (image === null) {
         return toast.error("Please Upload image");
@@ -48,25 +49,26 @@ const MyProfile = () => {
       );
 
       const cloudData = await res.json();
-      setUrl(cloudData.url);
-      console.log(cloudData.url);
       const { response, err } = await userApi.setAvatar({
         link: cloudData.url,
       });
 
+      if (err) toast.error(err.message);
       if (response) {
-        console.log(response);
+        dispatch(setUser({ ...user, avatar: cloudData.url }));
+        setImageUrl(cloudData.url);
+        toast.success("Image Upload Successfully");
       }
-      if (err) {
-        console.log(err);
-        toast.error(err.message);
-      }
-      toast.success("Image Upload Successfully");
-    } catch (error) {}
+    } 
+    catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+    finally{
+      dispatch(setGlobalLoading(false));
+    }
   };
-  useEffect(() => {
-    if (flag != 0) saveImage();
-  }, [flag]);
+
   useEffect(() => {
     const getFavorites = async () => {
       dispatch(setGlobalLoading(true));
@@ -102,6 +104,7 @@ const MyProfile = () => {
       await getFavorites();
       await getWatchlist();
       await getReviews();
+      setImageUrl(user.avatar);
     };
     getStuff();
   }, []);
@@ -128,14 +131,14 @@ const MyProfile = () => {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              {image ? (
+              {imageUrl? (
                 <img
                   style={{
                     width: "80px",
                     maxWidth: "80px",
                     borderRadius: "0.5rem",
                   }}
-                  src={image ? URL.createObjectURL(image) : ""}
+                  src={imageUrl}
                   alt="img"
                 />
               ) : (
@@ -181,12 +184,11 @@ const MyProfile = () => {
                     type="file"
                     style={{ display: "none" }}
                     onChange={(e) => {
-                      setImage(e.target.files[0]);
-                      setFlag(1);
+                      const image=e.target.files[0];
+                      saveImage({image});
                     }}
                   />
                 </label>
-                {/* <button onClick={saveImage}>Click</button> */}
               </Box>
             </Box>
 

@@ -155,12 +155,11 @@ const setAvatar = async (req, res) => {
   try {
     const { link } = req.body;
     const user = await userModel
-      .findById(req.user.id)
-      .select("password salt id");
+      .findById(req.user.id);
     if (!user) {
       return responseHandler.unauthorize(res);
     }
-    user.stAvatar(link);
+    user.avatar=link;
     await user.save();
     return responseHandler.ok(res, {});
   } catch {
@@ -168,16 +167,6 @@ const setAvatar = async (req, res) => {
   }
 };
 
-const getAvatar = async (req, res) => {
-  try {
-    const user = await userModel.findById(req.user.id);
-    if (!user) {
-      return responseHandler.notfound(res);
-    }
-    return responseHandler.ok(res, user);
-  } catch {
-    return responseHandler.error(res);
-  }
-};
 
-export default {signup,signin,updatePassword,forgotPassword,resetPassword,getInfo,setAvatar,getAvatar};
+
+export default {signup,signin,updatePassword,forgotPassword,resetPassword,getInfo,setAvatar};

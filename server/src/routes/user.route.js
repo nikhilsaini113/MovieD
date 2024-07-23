@@ -108,10 +108,8 @@ router.put(
   tokenMiddleware.auth,
   body("link").exists(),
   requestHandler.validate,
-  userController.updatePassword
+  userController.setAvatar
 );
-
-router.get("/getAvatar", tokenMiddleware.auth, userController.getInfo);
 
 router.get("/info", tokenMiddleware.auth, userController.getInfo);
 

@@ -6,7 +6,6 @@ const userEndpoints = {
   getInfo: "user/info",
   forgotPassword: "user/forgot-password",
   passwordUpdate: "user/update-password",
-  getAvatar: "user/getAvatar",
   setAvatar: "user/setAvatar",
 };
 
@@ -67,14 +66,7 @@ const userApi = {
       return { err };
     }
   },
-  getAvatar: async () => {
-    try {
-      const response = await privateClient.get(userEndpoints.getAvatar);
-      return { response };
-    } catch (err) {
-      return { err };
-    }
-  },
+  
   forgotPassword : async ({email}) => {
     try {
         const response = await publicClient.post(userEndpoints.forgotPassword, { email });
