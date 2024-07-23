@@ -15,7 +15,6 @@ const MediaSlide = ({ mediaType, mediaCategory }) => {
         page: 1,
       });
       if (response) {
-        console.log(response.results);
         setMedias(response.results);
       }
       if (err) {
