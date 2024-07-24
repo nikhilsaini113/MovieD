@@ -35,7 +35,7 @@ const signin = async (req, res) => {
     const { email, password } = req.body;
     const user = await userModel
       .findOne({ email })
-      .select("email password  salt id displayName");
+      .select("email password  salt id displayName avatar");
     if (!user) {
       return responseHandler.badRequest(res, "User not found");
     }

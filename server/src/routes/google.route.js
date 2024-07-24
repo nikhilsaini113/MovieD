@@ -3,15 +3,17 @@ import axios from "axios";
 import passport from "passport";
 import jsonwebtoken from "jsonwebtoken";
 const router = express.Router();
+
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
+
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:5173",
-    failureRedirect: "http://localhost:5173",
+    successRedirect: process.env.CLIENT_URL,
+    failureRedirect: process.env.CLIENT_URL,
   })
 );
 
@@ -30,6 +32,7 @@ router.get("/login/sucess", async (req, res) => {
     res.status(401).json({ message: "Not Authorized" });
   }
 });
+
 router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
@@ -46,4 +49,5 @@ router.get("/logout", (req, res) => {
     });
   });
 });
+
 export default router;

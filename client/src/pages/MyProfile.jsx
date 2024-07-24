@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Grid, Button, Typography, Divider, Avatar } from "@mui/material";
+import { Box, Grid, Button, Typography, Divider, Avatar} from "@mui/material";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import Container from "../components/common/Container";
@@ -13,11 +13,12 @@ import { setGlobalLoading } from "../redux/features/globalLoadingSlice";
 import { Link } from "react-router-dom";
 import tmdbConfigs from "../api/configs/tmdb.configs";
 import { stringToColor } from "../components/common/TextAvatar";
-import themeConfigs from "../configs/theme.configs";
 import userApi from "../api/modules/user.api";
 import { setUser } from "../redux/features/userSlice";
+import {useTheme} from '@mui/material/styles';
 
 const MyProfile = () => {
+  const theme= useTheme();
   const [favMedias, setFavMedias] = useState([]);
   const [watchMedias, setWatchMedias] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -57,15 +58,14 @@ const MyProfile = () => {
       if (response) {
         dispatch(setUser({ ...user, avatar: cloudData.url }));
         setImageUrl(cloudData.url);
+        dispatch(setGlobalLoading(false))
         toast.success("Image Upload Successfully");
       }
     } 
     catch (err) {
       console.log(err);
+      dispatch(setGlobalLoading(false))
       toast.error(err.message);
-    }
-    finally{
-      dispatch(setGlobalLoading(false));
     }
   };
 
@@ -125,7 +125,9 @@ const MyProfile = () => {
               flexDirection: { xs: "column", sm: "row" }, // Adjusting direction for small screens
               alignItems: { xs: "flex-start", sm: "center" }, // Align avatar to left on small screens
               justifyContent: "space-between",
-              backgroundColor: "#6E6E6E",
+              backgroundColor: theme.palette.mode === 'light'
+                ? theme.palette.grey[400]
+                : theme.palette.grey[700],
               borderRadius: 1,
               padding: 2,
             }}
@@ -166,18 +168,16 @@ const MyProfile = () => {
                   htmlFor="file-upload"
                   style={{ display: "inline-block", cursor: "pointer" }}
                 >
-                  <Box
+                  <Button
                     variant="contained"
-                    backgroundColor="#dc7f9b"
+                    color="primary"
+                    component="span"
                     sx={{
                       mt: { xs: 1, sm: 0 },
-                      alignSelf: "flex-end",
-                      padding: "7px",
-                      borderRadius: "5px",
                     }}
                   >
                     CHANGE AVATAR
-                  </Box>
+                  </Button>
                   <input
                     id="file-upload"
                     className="text-white"
