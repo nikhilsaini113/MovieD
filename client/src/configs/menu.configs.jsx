@@ -5,67 +5,56 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 
 const main = [
   {
     display: "home",
     path: "/",
-    icon: <HomeOutlinedIcon/>,
-    state: "home"
+    icon: <HomeOutlinedIcon />,
+    state: "home",
   },
   {
     display: "movies",
     path: "/movie",
-    icon: <SlideshowOutlinedIcon/>,
-    state: "movie"
+    icon: <SlideshowOutlinedIcon />,
+    state: "movie",
   },
   {
     display: "tv series",
     path: "/tv",
     icon: <LiveTvOutlinedIcon />,
-    state: "tv"
+    state: "tv",
   },
   {
     display: "search",
     path: "/search",
     icon: <SearchOutlinedIcon />,
-    state: "search"
-  }
+    state: "search",
+  },
 ];
 
 const user = [
   {
     display: "my profile",
     path: "/myprofile",
-    icon: < AccountBoxOutlinedIcon/>,
-    state: "myprofile"
+    icon: <AccountBoxOutlinedIcon />,
+    state: "myprofile",
   },
-  {
-    display: "favorites",
-    path: "/favorites",
-    icon: <FavoriteBorderOutlinedIcon />,
-    state: "favorite"
-  },
-  {
-    display: "watchlist",
-    path: "/watchlist",
-    icon: < AddBoxOutlinedIcon/>,
-    state: "watchlist"
-  },
+
   {
     display: "reviews",
     path: "/reviews",
     icon: <RateReviewOutlinedIcon />,
-    state: "reviews"
+    state: "reviews",
   },
   {
     display: "password update",
     path: "/password-update",
     icon: <LockResetOutlinedIcon />,
-    state: "password.update"
-  }
+    state: "password.update",
+  },
 ];
 
 const menuConfigs = { main, user };

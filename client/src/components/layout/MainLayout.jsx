@@ -4,18 +4,22 @@ import GlobalLoading from "../common/GlobalLoading";
 import Footer from "../common/Footer";
 import TopBar from "../common/TopBar";
 import AuthModal from "../common/AuthModal";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import userApi from "../../api/modules/user.api";
 import favoriteApi from "../../api/modules/favorite.api";
 import watchlistApi from "../../api/modules/watchlist.api";
-import { setWatchlist,setListFavorites,setUser } from "../../redux/features/userSlice";
+import {
+  setWatchlist,
+  setListFavorites,
+  setUser,
+} from "../../redux/features/userSlice";
 import axios from "axios";
 
 const MainLayout = () => {
-  const dispatch=useDispatch();
-  const {user} = useSelector((state)=>state.user);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   const { themeMode } = useSelector((state) => state.themeMode);
 
   useEffect(() => {
@@ -25,18 +29,17 @@ const MainLayout = () => {
         dispatch(setUser(response));
         return;
       }
-      const res = await axios.get("http://localhost:5000/login/sucess", {
+      const res = await axios.get("http://localhost:5000/auth/login/sucess", {
         withCredentials: true,
       });
-      if(res.data.user.id) 
-        dispatch(setUser(res.data.user));
-    }
+      if (res.data.user.id) dispatch(setUser(res.data.user));
+    };
     authUser();
-  },[dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
-    localStorage.setItem("themeMode",themeMode);
-  },[themeMode])
+    localStorage.setItem("themeMode", themeMode);
+  }, [themeMode]);
 
   useEffect(() => {
     const getFavorites = async () => {
@@ -47,7 +50,7 @@ const MainLayout = () => {
       if (err) {
         toast.error(err.message);
       }
-    }
+    };
     const getWatchlist = async () => {
       const { response, err } = await watchlistApi.getList();
       if (response) {
@@ -56,16 +59,15 @@ const MainLayout = () => {
       if (err) {
         toast.error(err.message);
       }
-    }
-    if(user){
+    };
+    if (user) {
       getFavorites();
       getWatchlist();
-    }
-    else{
+    } else {
       dispatch(setListFavorites([]));
       dispatch(setWatchlist([]));
     }
-  },[dispatch,user])
+  }, [dispatch, user]);
   return (
     <>
       {/* global loading */}

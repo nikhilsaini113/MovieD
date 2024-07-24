@@ -1,5 +1,11 @@
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import { ListItemButton, ListItemIcon, ListItemText, Menu, Typography } from "@mui/material";
+import {
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +15,7 @@ import axios from "axios";
 
 const UserMenu = () => {
   const { user } = useSelector((state) => state.user);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -18,14 +24,16 @@ const UserMenu = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/logout', { withCredentials: true });
+      const response = await axios.get("http://localhost:5000/auth/logout", {
+        withCredentials: true,
+      });
       dispatch(setUser(null));
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
-  
+
   return (
     <>
       {user && (
@@ -51,19 +59,29 @@ const UserMenu = () => {
                 onClick={() => setAnchorEl(null)}
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText disableTypography primary={
-                  <Typography textTransform="uppercase">{item.display}</Typography>
-                } />
+                <ListItemText
+                  disableTypography
+                  primary={
+                    <Typography textTransform="uppercase">
+                      {item.display}
+                    </Typography>
+                  }
+                />
               </ListItemButton>
             ))}
             <ListItemButton
               sx={{ borderRadius: "10px" }}
               onClick={handleLogout}
             >
-              <ListItemIcon><LogoutOutlinedIcon /></ListItemIcon>
-              <ListItemText disableTypography primary={
-                <Typography textTransform="uppercase">sign out</Typography>
-              } />
+              <ListItemIcon>
+                <LogoutOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText
+                disableTypography
+                primary={
+                  <Typography textTransform="uppercase">sign out</Typography>
+                }
+              />
             </ListItemButton>
           </Menu>
         </>
