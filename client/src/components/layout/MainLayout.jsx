@@ -29,7 +29,7 @@ const MainLayout = () => {
         dispatch(setUser(response));
         return;
       }
-      const res = await axios.get("http://localhost:5000/auth/login/sucess", {
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/login/success`, {
         withCredentials: true,
       });
       if (res.data.user.id) dispatch(setUser(res.data.user));

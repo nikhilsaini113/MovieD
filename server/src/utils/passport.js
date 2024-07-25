@@ -6,7 +6,7 @@ import crypto from "crypto";
 const passportUtil = (app) => {
   app.use(
     session({
-      secret: "googlelogin",
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
       cookie: {
@@ -16,6 +16,7 @@ const passportUtil = (app) => {
   );
   app.use(passport.initialize());
   app.use(passport.session());
+
   passport.use(
     new OAuth2Strategy(
       {
@@ -35,7 +36,7 @@ const passportUtil = (app) => {
               displayName: profile.displayName,
               email: profile.emails[0].value,
               authType: "google",
-              avatar: "null",
+              avatar: "",
               password: "googlelogin",
               salt: crypto.randomBytes(16).toString("hex"),
             });
@@ -57,24 +58,6 @@ const passportUtil = (app) => {
 
   passport.deserializeUser((user, done) => {
     done(null, user);
-  });
-  app.get("/auth/logout", (req, res) => {
-    req.logout((err) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ message: "Error logging out", error: err });
-      }
-      req.session.destroy((err) => {
-        if (err) {
-          return res
-            .status(500)
-            .json({ message: "Error destroying session", error: err });
-        }
-        res.clearCookie("connect.sid"); // clear the session cookie
-        return res.status(200).json({ message: "Logged out successfully" });
-      });
-    });
   });
 };
 

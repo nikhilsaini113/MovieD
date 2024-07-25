@@ -24,7 +24,7 @@ const UserMenu = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/auth/logout", {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/google/signout`, {
         withCredentials: true,
       });
       dispatch(setUser(null));
