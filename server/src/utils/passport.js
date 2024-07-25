@@ -21,7 +21,7 @@ const passportUtil = (app) => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "/auth/google/callback",
+        callbackURL: "/api/v1/auth/google/callback",
         scope: ["profile", "email"],
       },
       async (accessToken, refreshToken, profile, done) => {
@@ -58,5 +58,24 @@ const passportUtil = (app) => {
   passport.deserializeUser((user, done) => {
     done(null, user);
   });
+  app.get("/auth/logout", (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ message: "Error logging out", error: err });
+      }
+      req.session.destroy((err) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ message: "Error destroying session", error: err });
+        }
+        res.clearCookie("connect.sid"); // clear the session cookie
+        return res.status(200).json({ message: "Logged out successfully" });
+      });
+    });
+  });
 };
+
 export default passportUtil;
