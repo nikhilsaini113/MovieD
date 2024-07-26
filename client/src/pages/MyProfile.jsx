@@ -104,7 +104,9 @@ const MyProfile = () => {
       await getFavorites();
       await getWatchlist();
       await getReviews();
-      setImageUrl(user.avatar);
+      if(user.avatar?.length > 0 && user.avatar !== "null") {
+        setImageUrl(user.avatar);
+      }
     };
     getStuff();
   }, []);
@@ -133,7 +135,7 @@ const MyProfile = () => {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              {imageUrl? (
+              {imageUrl.length > 0 ? (
                 <img
                   style={{
                     width: "80px",

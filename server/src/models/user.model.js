@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema(
       enum: ["google", "local"],
       default: "local",
     },
-    avatar: { type: String, required: true },
+    avatar: { type: String},
   },
   modelOptions
 );

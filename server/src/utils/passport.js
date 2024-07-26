@@ -36,7 +36,6 @@ const passportUtil = (app) => {
               displayName: profile.displayName,
               email: profile.emails[0].value,
               authType: "google",
-              avatar: "",
               password: "googlelogin",
               salt: crypto.randomBytes(16).toString("hex"),
             });
