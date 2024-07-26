@@ -14,7 +14,7 @@ const signup = async (req, res) => {
     user.displayName = displayName;
     user.email = email;
     user.authType = "local";
-    user.avatar = "null";
+    user.avatar = "";
     user.setPassword(password);
     await user.save();
     const token = jsonwebtoken.sign({ data: user.id }, process.env.JWT_SECRET, {
