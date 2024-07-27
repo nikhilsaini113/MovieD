@@ -3,6 +3,7 @@ import passport from "passport";
 import { Strategy as OAuth2Strategy } from "passport-google-oauth2";
 import userModel from "../models/user.model.js";
 import crypto from "crypto";
+
 const passportUtil = (app) => {
   app.use(
     session({
@@ -12,6 +13,9 @@ const passportUtil = (app) => {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30,
       },
+      store: new session.MemoryStore({
+        checkPeriod: 86400000*30
+      }),
     })
   );
   app.use(passport.initialize());
