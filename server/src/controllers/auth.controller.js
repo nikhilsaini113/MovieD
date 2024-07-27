@@ -17,6 +17,7 @@ const loginSuccess=async (req, res) => {
         req.user.token = token;
         res.status(200).json({ message: "User Login", user: req.user });
       } else {
+        console.log(JSON.stringify(req.user));
         res.status(401).json({ message: "Not Authorized" });
       }
 }
