@@ -8,7 +8,7 @@ import routes from "./src/routes/index.js";
 import passportUtil from "./src/utils/passport.js";
 const app = express();
 
-app.use(cors());
+app.use(cors({credentials: true}));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
