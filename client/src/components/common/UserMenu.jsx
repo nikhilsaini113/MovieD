@@ -28,7 +28,6 @@ const UserMenu = () => {
         withCredentials: true,
       });
       dispatch(setUser(null));
-      window.location.reload();
       navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);

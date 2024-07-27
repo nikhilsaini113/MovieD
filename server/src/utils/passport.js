@@ -3,6 +3,8 @@ import passport from "passport";
 import { Strategy as OAuth2Strategy } from "passport-google-oauth2";
 import userModel from "../models/user.model.js";
 import crypto from "crypto";
+import MongoStore from 'connect-mongo'
+
 
 const passportUtil = (app) => {
   app.use(
@@ -13,8 +15,10 @@ const passportUtil = (app) => {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30,
       },
-      store: new session.MemoryStore({
-        checkPeriod: 86400000*30
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URL,
+        ttl: 30 * 24 * 60 * 60, // 14 days
+        autoRemove: 'native', // Default
       }),
     })
   );
