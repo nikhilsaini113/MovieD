@@ -17,7 +17,7 @@ const passportUtil = (app) => {
         secure: true,
         //httpOnly: true,
         sameSite: "none",
-        //domain: "filmfolioapi.onrender.com",
+        domain: "filmfolioapi.onrender.com",
       },
       store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URL,
