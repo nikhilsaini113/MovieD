@@ -14,9 +14,9 @@ const passportUtil = (app) => {
       name: "mycookie",
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 30,
-        secure: true,
+        // secure: true,
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "lax",
         //domain: "filmfolioapi.onrender.com",
       },
       store: MongoStore.create({
